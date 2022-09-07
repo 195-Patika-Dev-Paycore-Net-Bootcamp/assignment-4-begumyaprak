@@ -12,12 +12,12 @@ namespace AtikYonetimSistemi.Controllers
 
     [ApiController]
     [Route("api/[controller]")]
-    public class ClusteringController : ControllerBase
+    public class CLusteringController : ControllerBase
     {
         private readonly IMapperSession _session;
 
 
-        public ClusteringController(IMapperSession session)
+        public CLusteringController(IMapperSession session)
         {
             _session = session;
 
@@ -36,31 +36,31 @@ namespace AtikYonetimSistemi.Controllers
 
 
             //en yakından en  uzağa sıralandı 
-             containers = containers.OrderBy(a => CalculateDistance(startLat, startLong, a.Latitude, a.Longitude)).ToList();
+            containers = containers.OrderBy(a => CalculateDistance(startLat, startLong, a.Latitude, a.Longitude)).ToList();
 
             //araca ait container sayısı n küme sayısına tam bölünmediği durumda mod alınır.           
             var mod = containers.Count() % n;
 
             var listItemCount = containers.Count() / n;
-           
-            if (mod > 0)
-            {
-                listItemCount= listItemCount + 1;
-            }
-            
-            
-            //oluşan grupların listesi
+
+
+
+            //oluşan grupların listesi 
             var groups = new List<List<Container>>();
 
+               
             //uzaklıklara göre ve n sayısına göre yeni kümeleri oluşturan for döngüsü 
-            var counter = 0;
-            for (int i = 0; i < n; i++)
-            {
+            var counter = 0; 
+            for (int i = 0; i < n; i++) 
+            { 
                 var list = containers.Skip(counter).Take(listItemCount).ToList();
                 groups.Add(list);
                 counter = counter + listItemCount;
             }
-           
+
+            // mod elemanını, uzaklığa göre sıralanmış listeden çekiyoruz ve kümelenmiş group listesinin son listesine eleman olarak ekliyoruz.
+            var endMainList = containers.TakeLast(mod); 
+            groups.Last().AddRange(endMainList);
 
             return Ok(groups);
         }
