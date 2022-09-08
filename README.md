@@ -1,8 +1,11 @@
 
 
+
+
 # Waste Management System
 
 ## Outputs
+![excel son](https://user-images.githubusercontent.com/23440294/189135773-c0007a2d-0b50-40d9-bc4e-d4c0b92e2064.PNG)
 
 ### Methods
 
